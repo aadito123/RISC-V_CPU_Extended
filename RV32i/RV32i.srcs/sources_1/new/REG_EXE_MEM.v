@@ -35,6 +35,9 @@ module REG_EXE_MEM(
         input [4:0] written_reg,
         input [4:0] read_reg1,
         input [4:0] read_reg2,
+        input WB_EN_IN,
+		input MEM_R_EN_IN,
+		input MEM_W_EN_IN,
         
         // Output
         output reg [31:0] EXE_MEM_inst_in,
@@ -46,7 +49,11 @@ module REG_EXE_MEM(
         output reg EXE_MEM_RegWrite,
         output reg [4:0] EXE_MEM_written_reg,
         output reg [4:0] EXE_MEM_read_reg1,
-        output reg [4:0] EXE_MEM_read_reg2
+        output reg [4:0] EXE_MEM_read_reg2,
+
+        output reg WB_EN,
+		output reg MEM_R_EN,
+		output reg MEM_W_EN,
     );
     always @ (posedge clk or posedge rst) begin
         if (rst == 1) begin
@@ -60,6 +67,7 @@ module REG_EXE_MEM(
             EXE_MEM_written_reg <= 5'b00000;
             EXE_MEM_read_reg1   <= 5'b00000;
             EXE_MEM_read_reg2   <= 5'b00000;
+            { WB_EN, MEM_R_EN, MEM_W_EN } <= 3'b000;
         end
         else if (CE) begin
             EXE_MEM_inst_in     <= inst_in;
@@ -72,6 +80,7 @@ module REG_EXE_MEM(
             EXE_MEM_written_reg <= written_reg;
             EXE_MEM_read_reg1   <= read_reg1;
             EXE_MEM_read_reg2   <= read_reg2;
+            { WB_EN, MEM_R_EN, MEM_W_EN } <= { WB_EN_IN, MEM_R_EN_IN, MEM_W_EN_IN };
         end
     end
 endmodule

@@ -39,6 +39,15 @@ module REG_ID_EXE(
         input [4:0] written_reg,
         input [4:0] read_reg1,
         input [4:0] read_reg2,
+
+        // forwarding and hazard signals
+        input MEM_R_EN_IN,
+        input MEM_W_EN_IN,
+        input WB_EN_IN,
+
+        output reg MEM_R_EN, 
+        output reg MEM_W_EN, 
+        output reg WB_EN,
         
         output reg [31:0] ID_EXE_inst_in,
         output reg [31:0] ID_EXE_PC = 0,
@@ -70,6 +79,8 @@ module REG_ID_EXE(
             ID_EXE_written_reg  <= 5'b00000;
             ID_EXE_read_reg1    <= 5'b00000;
             ID_EXE_read_reg2    <= 5'b00000;
+
+            { MEM_R_EN, MEM_W_EN, WB_EN } <= 3'b000;
         end
         else if (CE) begin
             ID_EXE_inst_in      <= inst_in;
@@ -85,6 +96,9 @@ module REG_ID_EXE(
             ID_EXE_written_reg  <= written_reg;
             ID_EXE_read_reg1    <= read_reg1;
             ID_EXE_read_reg2    <= read_reg2;
+            MEM_R_EN <= MEM_R_EN_IN;
+            MEM_W_EN <= MEM_W_EN_IN;
+            WB_EN <= WB_EN_IN;
         end
     end   
 endmodule

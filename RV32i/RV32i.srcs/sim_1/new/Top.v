@@ -24,6 +24,7 @@ module Top;
 
     reg clk;
     reg rst;
+    reg forwarding_EN; // new
     
     reg [31:0] Inst_ROM[0:16383];
     reg [31:0] Data_RAM[0:16383];
@@ -42,9 +43,9 @@ module Top;
     RV32iPCPU _rv32ipcpu_ (
         .clk(clk),
         .rst(rst),
+        .forwarding_EN(forwarding_EN),
         .data_in(data_in),
         .inst_in(inst_in),
-        
         .ALU_out(addr_out),
         .data_out(data_out),
         .mem_w(data_valid),
@@ -75,12 +76,14 @@ module Top;
         end
         clk = 0;
         rst = 0;
+        forwarding_EN = 0;
         #1;
         rst = 1;
         #1;
         rst = 0;
         
     end 
+    
     always begin
         clk = ~clk;
         #1;
