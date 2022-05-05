@@ -424,6 +424,7 @@ module RV32iPCPU(
         .EXE_MEM_RegWrite(EXE_MEM_RegWrite),
         
         .EXE_MEM_written_reg(EXE_MEM_written_reg), .EXE_MEM_read_reg1(EXE_MEM_read_reg1), .EXE_MEM_read_reg2(EXE_MEM_read_reg2),
+        
         .WB_EN(WB_EN_MEM),
 		.MEM_R_EN(MEM_R_EN_MEM),
 		.MEM_W_EN(MEM_W_EN_MEM),
