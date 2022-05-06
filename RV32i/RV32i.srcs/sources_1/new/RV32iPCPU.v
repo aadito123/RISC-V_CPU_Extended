@@ -340,6 +340,11 @@ module RV32iPCPU(
         .MEM_R_EN(MEM_R_EN_EXE), 
         .MEM_W_EN(MEM_W_EN_EXE), 
         .WB_EN(WB_EN_EXE),
+        .output_ALU1(output_ALU1),
+        .output_ALU2(output_ALU2),
+        .output_store(output_store),
+        .EXE_MEM_ALU_out(EXE_MEM_ALU_out),
+        .MEM_WB_ALU_out(MEM_WB_ALU_out),
         
         // Output
         .ID_EXE_inst_in(ID_EXE_inst_in),
@@ -424,7 +429,7 @@ module RV32iPCPU(
         .EXE_MEM_RegWrite(EXE_MEM_RegWrite),
         
         .EXE_MEM_written_reg(EXE_MEM_written_reg), .EXE_MEM_read_reg1(EXE_MEM_read_reg1), .EXE_MEM_read_reg2(EXE_MEM_read_reg2),
-        
+
         .WB_EN(WB_EN_MEM),
 		.MEM_R_EN(MEM_R_EN_MEM),
 		.MEM_W_EN(MEM_W_EN_MEM),

@@ -44,6 +44,11 @@ module REG_ID_EXE(
         input MEM_R_EN_IN,
         input MEM_W_EN_IN,
         input WB_EN_IN,
+        input [1:0] output_ALU1,
+        input [1:0] output_ALU2,
+        input [1:0] output_store,
+        input [31:0] EXE_MEM_ALU_out,
+        input [31:0] MEM_WB_ALU_out,
 
         output reg MEM_R_EN, 
         output reg MEM_W_EN, 
@@ -85,13 +90,34 @@ module REG_ID_EXE(
         else if (CE) begin
             ID_EXE_inst_in      <= inst_in;
             ID_EXE_PC           <= PC;
-            ID_EXE_ALU_A        <= ALU_A;
-            ID_EXE_ALU_B        <= ALU_B;
             ID_EXE_ALU_Control  <= ALU_Control;
-            ID_EXE_Data_out     <= Data_out;
             ID_EXE_mem_w        <= mem_w;
             ID_EXE_DatatoReg    <= DatatoReg;
             ID_EXE_RegWrite     <= RegWrite;
+
+            Mux3to1b32 ALU1(
+                .s(output_ALU1),
+                .I0(ALU_A),
+                .I1(EXE_MEM_ALU_out),
+                .I2(MEM_WB_ALU_out),
+                .o(ID_EXE_ALU_A)
+            );
+
+            Mux3to1b32 ALU2(
+                .s(output_ALU2),
+                .I0(ALU_B),
+                .I1(EXE_MEM_ALU_out),
+                .I2(MEM_WB_ALU_out),
+                .o(ID_EXE_ALU_B)
+            );
+
+            Mux3to1b32 ALU2(
+                .s(output_store),
+                .I0(Data_out),
+                .I1(EXE_MEM_ALU_out),
+                .I2(MEM_WB_ALU_out),
+                .o(ID_EXE_Data_out)
+            );
             
             ID_EXE_written_reg  <= written_reg;
             ID_EXE_read_reg1    <= read_reg1;

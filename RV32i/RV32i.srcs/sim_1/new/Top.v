@@ -91,6 +91,7 @@ module Top;
             $display("Simulation cycle count: %t\n", $time);
             $stop;
         end
+        $display("Cycle count: %t\n", $time);
     end
 
 endmodule
