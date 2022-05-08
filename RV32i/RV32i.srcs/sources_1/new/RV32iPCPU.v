@@ -18,7 +18,6 @@
 // Additional Comments:
 // 
 //////////////////////////////////////////////////////////////////////////////////
-`include "Forwarding.v";
 
 module RV32iPCPU(
     input clk,
@@ -122,34 +121,6 @@ module RV32iPCPU(
     wire hazard_detected, is_imm, ST_or_BNE;
 
     wire [1:0] output_ALU1, output_ALU2, output_store;
-   
-    HazardDetection hazard_detection(
-        .src1_ID(IF_ID_read_reg1),
-        .src2_ID(IF_ID_read_reg2),
-        .destEXE(ID_EXE_written_reg),
-        .dest_MEM(EXE_MEM_written_reg),
-        .branch_comm(Branch),
-        .WB_EN_EXE(WB_EN_EXE),
-        .WB_EN_MEM(WB_EN_MEM),
-        .MEM_R_EN_EXE(MEM_R_EN_EXE),
-        .ST_or_BNE(ST_or_BNE),
-        .is_imm(is_imm),
-        .forward_EN(forwarding_EN),
-        .hazard_detected(hazard_detected),
-    );
-
-    ForwardingUnit forwarding(
-        .src1_EXE(ID_EXE_read_reg1),
-        .src2_EXE(ID_EXE_read_reg2),
-        .ST_src_EXE(ID_EXE_written_reg),
-        .dest_MEM(EXE_MEM_written_reg),
-        .dest_WB(EXE_MEM_written_reg),
-        .WB_EN_MEM(WB_EN_MEM),
-        .WB_EN_WB(WB_EN_WB),
-        .output_ALU1(output_ALU1),
-        .output_ALU2(output_ALU2),
-        .output_store(output_store)
-    );
     
     Data_Stall _dstall_ (
         .IF_ID_written_reg(IF_ID_written_reg),
@@ -218,10 +189,10 @@ module RV32iPCPU(
         .I1(add_branch_out[31:0]),      // Containing "PC" from ID stage
         .I2(add_jal_out[31:0]),         // From ID stage
         .I3(add_jalr_out[31:0]),        // From ID stage
+        .disp(1'b1),
         .s(Branch[1:0]),                // From ID
         .o(PC_wb[31:0])
         );
-
 
     REG_IF_ID _if_id_ (
         .clk(clk), .rst(rst), .CE(V5),
@@ -270,6 +241,7 @@ module RV32iPCPU(
         .Fun1(IF_ID_inst_in[14:12]),
         .Fun2(IF_ID_inst_in[31:25]),
         .zero(zero),
+        .hazard_detected(hazard_detected),
         // Output:
         .ALUSrc_A(ALUSrc_A),
         .ALUSrc_B(ALUSrc_B[1:0]),
@@ -312,6 +284,58 @@ module RV32iPCPU(
     assign IF_ID_Data_out = rdata_B;
     ID_Zero_Generator _id_zero_ (.A(ALU_A), .B(ALU_B), .ALU_operation(ALU_Control), .zero(zero));
 
+    Mux3to1b32 ALU1 (
+        .s(output_ALU1),
+        .I0(ALU_A),
+        .I1(EXE_MEM_ALU_out),
+        .I2(MEM_WB_ALU_out),
+        .o(ALU_A)
+    );
+
+    Mux3to1b32 ALU2 (
+        .s(output_ALU2),
+        .I0(ALU_B),
+        .I1(EXE_MEM_ALU_out),
+        .I2(MEM_WB_ALU_out),
+        .o(ALU_B)
+    );
+
+    Mux3to1b32 ALU3 (
+        .s(output_store),
+        .I0(IF_ID_Data_out),
+        .I1(EXE_MEM_ALU_out),
+        .I2(MEM_WB_ALU_out),
+        .o(ID_EXE_Data_out)
+    );
+
+    HazardDetection hazard_detection(
+        .src1_ID(IF_ID_read_reg1),
+        .src2_ID(IF_ID_read_reg2),
+        .dest_EXE(ID_EXE_written_reg),
+        .dest_MEM(EXE_MEM_written_reg),
+        .branch_comm(Branch),
+        .WB_EN_EXE(WB_EN_EXE),
+        .WB_EN_MEM(WB_EN_MEM),
+        .MEM_R_EN_EXE(MEM_R_EN_EXE),
+        .ST_or_BNE(ST_or_BNE),
+        .is_imm(is_imm),
+        .forward_EN(forwarding_EN),
+        .hazard_detected(hazard_detected)
+    );
+
+    ForwardingUnit forwarding(
+        .src1_EXE(ID_EXE_read_reg1),
+        .src2_EXE(ID_EXE_read_reg2),
+        .ST_src_EXE(ID_EXE_written_reg),
+        .dest_MEM(EXE_MEM_written_reg),
+        .dest_WB(EXE_MEM_written_reg),
+        .WB_EN_MEM(WB_EN_MEM),
+        .WB_EN_WB(WB_EN_WB),
+        .output_ALU1(output_ALU1),
+        .output_ALU2(output_ALU2),
+        .output_store(output_store)
+    );
+
     REG_ID_EXE _id_exe_ (
         .clk(clk), .rst(rst), .CE(V5), .ID_EXE_dstall(ID_EXE_dstall),
         // Input
@@ -323,7 +347,7 @@ module RV32iPCPU(
         //// To EXE stage, ALU operation control signal
         .ALU_Control(ALU_Control),
         //// To MEM stage, for sw instruction, data from rs2 register written into memory
-        .Data_out(IF_ID_Data_out),
+        .Data_out(ID_EXE_Data_out),
         //// To MEM stage, for sw instruction, memor write enable signal
         .mem_w(IF_ID_mem_w),
         //// To WB stage, for choosing different data written back to register file
@@ -340,11 +364,6 @@ module RV32iPCPU(
         .MEM_R_EN(MEM_R_EN_EXE), 
         .MEM_W_EN(MEM_W_EN_EXE), 
         .WB_EN(WB_EN_EXE),
-        .output_ALU1(output_ALU1),
-        .output_ALU2(output_ALU2),
-        .output_store(output_store),
-        .EXE_MEM_ALU_out(EXE_MEM_ALU_out),
-        .MEM_WB_ALU_out(MEM_WB_ALU_out),
         
         // Output
         .ID_EXE_inst_in(ID_EXE_inst_in),
@@ -432,7 +451,7 @@ module RV32iPCPU(
 
         .WB_EN(WB_EN_MEM),
 		.MEM_R_EN(MEM_R_EN_MEM),
-		.MEM_W_EN(MEM_W_EN_MEM),
+		.MEM_W_EN(MEM_W_EN_MEM)
         );
 
     // MEM:-------------------------------------------------------------------------------------------

@@ -76,7 +76,7 @@ module Top;
         end
         clk = 0;
         rst = 0;
-        forwarding_EN = 0;
+        forwarding_EN = 1; // 1 to enable forwarding
         #1;
         rst = 1;
         #1;
@@ -87,11 +87,11 @@ module Top;
     always begin
         clk = ~clk;
         #1;
-        if (Data_RAM[0] == 32'b1) begin             // The first entry of data memory is set to 1 after execution, please check `....../[RV32i directory]/Vec_Mul.txt` assembly code
+        if (Data_RAM[0] == 32'b1 || $time == 4'd1800) begin             // The first entry of data memory is set to 1 after execution, please check `....../[RV32i directory]/Vec_Mul.txt` assembly code
             $display("Simulation cycle count: %t\n", $time);
             $stop;
         end
-        $display("Cycle count: %t\n", $time);
+        //$display("Cycle count: %t\n", $time);
     end
 
 endmodule

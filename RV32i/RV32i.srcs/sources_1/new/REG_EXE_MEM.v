@@ -53,7 +53,7 @@ module REG_EXE_MEM(
 
         output reg WB_EN,
 		output reg MEM_R_EN,
-		output reg MEM_W_EN,
+		output reg MEM_W_EN
     );
     always @ (posedge clk or posedge rst) begin
         if (rst == 1) begin

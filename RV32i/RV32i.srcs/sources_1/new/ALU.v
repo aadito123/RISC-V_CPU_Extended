@@ -50,7 +50,7 @@ module ALU(
 					overflow = 1;
 				else overflow = 0;
 			end
-			5'b00011: begin	// sub
+			5'b00011: begin	// sub (and bne)
 				res = A_temp - B_temp;
 				if ((A[31] == 1 && B[31] == 0 && res[31] == 0) || (A[31] == 0 && B[31] == 1 && res[31] == 1))
 					overflow = 1;

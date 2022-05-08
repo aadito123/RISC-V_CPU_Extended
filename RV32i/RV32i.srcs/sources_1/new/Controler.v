@@ -40,7 +40,7 @@ module Controler(
         output reg ST_or_BNE,
         output reg WB_EN_ID,
         output reg MEM_R_EN_ID,
-        output reg MEM_W_EN_ID,
+        output reg MEM_W_EN_ID
 		);
 	always @(*) begin
         if (hazard_detected == 0) begin
@@ -192,7 +192,8 @@ module Controler(
                         3'b001: begin // BNE
                             ST_or_BNE = 1;
                             ALU_Control = 5'b00011;
-                            Branch = {1'b0, ~zero};
+                            Branch = 2'b01;
+                            //Branch = {1'b0, zero};
                         end
                         3'b100: begin // BLT
                             ALU_Control = 5'b00101;
@@ -238,6 +239,7 @@ module Controler(
             // hazard detected
             {ALU_Control, WB_EN_ID, MEM_W_EN_ID} = 0;
         end
+         $display("ST_or_BNE: %t\nBranch: %t\nOPcode: %t\nFun1: %t\nFun2: %t\nCycle: %t\n", ST_or_BNE, Branch, OPcode, Fun1, Fun2, $time);
 	end
 endmodule
 
