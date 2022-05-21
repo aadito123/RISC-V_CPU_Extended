@@ -24,7 +24,6 @@ module Top;
 
     reg clk;
     reg rst;
-    reg forwarding_EN; // new
     
     reg [31:0] Inst_ROM[0:16383];
     reg [31:0] Data_RAM[0:16383];
@@ -43,9 +42,9 @@ module Top;
     RV32iPCPU _rv32ipcpu_ (
         .clk(clk),
         .rst(rst),
-        .forwarding_EN(forwarding_EN),
         .data_in(data_in),
         .inst_in(inst_in),
+        
         .ALU_out(addr_out),
         .data_out(data_out),
         .mem_w(data_valid),
@@ -69,29 +68,26 @@ module Top;
         
     initial begin
         // Initialize Inst ROM and Data RAM
-        $readmemh("ROM_data.txt", Inst_ROM);    // Please find this file in `....../[RV32i directory]/RV32i.sim/sim_1/behav/xsim/ROM_data.txt`
+        $readmemh("ROM_data.txt.txt", Inst_ROM);    // Please find this file in `....../[RV32i directory]/RV32i.sim/sim_1/behav/xsim/ROM_data.txt`
                                                    // When using "Assembler", you can get the hex numbers at the right-hand side text box
         for (i = 0; i < 16384; i = i + 1) begin
             Data_RAM[i] = 32'h0;
         end
         clk = 0;
         rst = 0;
-        forwarding_EN = 1; // 1 to enable forwarding
         #1;
         rst = 1;
         #1;
         rst = 0;
         
     end 
-    
     always begin
         clk = ~clk;
         #1;
-        if (Data_RAM[0] == 32'b1 || $time == 4'd1800) begin             // The first entry of data memory is set to 1 after execution, please check `....../[RV32i directory]/Vec_Mul.txt` assembly code
+        if (Data_RAM[0] == 32'b1) begin             // The first entry of data memory is set to 1 after execution, please check `....../[RV32i directory]/Vec_Mul.txt` assembly code
             $display("Simulation cycle count: %t\n", $time);
             $stop;
         end
-        //$display("Cycle count: %t\n", $time);
     end
 
 endmodule

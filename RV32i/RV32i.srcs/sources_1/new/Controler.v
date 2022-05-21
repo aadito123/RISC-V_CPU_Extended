@@ -27,7 +27,7 @@ module Controler(
 		input wire zero,
         input hazard_detected,
 		output reg ALUSrc_A,
-		output reg [1:0] ALUSrc_B,
+		output reg ALUSrc_B,
 		output reg [1:0] DatatoReg,
 		output reg [1:0] Branch,
 		output reg RegWrite,
@@ -44,202 +44,202 @@ module Controler(
 		);
 	always @(*) begin
         if (hazard_detected == 0) begin
-            ALUSrc_B = 0;
-            ALUSrc_A = 0;
-            DatatoReg = 2'b0;
-            Branch = 0;
-            RegWrite = 0;
-            mem_w = 0;
-            B_H_W = 2'b0; // default: immediate is a word
-            sign = 1'b1; // default: signed extension to "write_data" 
+            ALUSrc_B <= 0;
+            ALUSrc_A <= 0;
+            DatatoReg <= 2'b0;
+            Branch <= 0;
+            RegWrite <= 0;
+            mem_w <= 0;
+            B_H_W <= 2'b0; // default: immediate is a word
+            sign <= 1'b1; // default: signed extension to "write_data" 
 
-            is_imm = 0;
-            ST_or_BNE = 0;
-            WB_EN_ID = 0;
-            MEM_R_EN_ID = 0;
-            MEM_W_EN_ID = 0;  
+            is_imm <= 0;
+            ST_or_BNE <= 0;
+            WB_EN_ID <= 0;
+            MEM_R_EN_ID <= 0;
+            MEM_W_EN_ID <= 0;  
             case(OPcode)
                 // R
                 7'b0110011: begin 
-                    WB_EN_ID = 1;
-                    RegWrite = 1;
+                    WB_EN_ID <= 1;
+                    RegWrite <= 1;
                     case(Fun1)
                         3'b000: begin
                             case (Fun2)
-                                7'b0000000: ALU_Control = 5'b00010; // ADD
-                                7'b0100000: ALU_Control = 5'b00011; // SUB
-                                default: ALU_Control = 5'b11111;
+                                7'b0000000: ALU_Control <= 5'b00010; // ADD
+                                7'b0100000: ALU_Control <= 5'b00011; // SUB
+                                default: ALU_Control <= 5'b11111;
                             endcase
                         end
                         3'b001: begin // SLL
-                            ALU_Control = 5'b00111;
+                            ALU_Control <= 5'b00111;
                         end
-                        3'b010: ALU_Control = 5'b00101; // SLT
-                        3'b011: ALU_Control = 5'b00110; // SLTU
-                        3'b100: ALU_Control = 5'b00100; // XOR
+                        3'b010: ALU_Control <= 5'b00101; // SLT
+                        3'b011: ALU_Control <= 5'b00110; // SLTU
+                        3'b100: ALU_Control <= 5'b00100; // XOR
                         3'b101: begin
                             case (Fun2)
                                 7'b0000000: begin // SRL
-                                    ALU_Control = 5'b01000;
+                                    ALU_Control <= 5'b01000;
                                 end
                                 7'b0100000: begin // SRA
-                                    ALU_Control = 5'b01001;
+                                    ALU_Control <= 5'b01001;
                                 end
-                                default: ALU_Control = 5'b11111;
+                                default: ALU_Control <= 5'b11111;
                             endcase
                         end
-                        3'b110: ALU_Control = 5'b00001; // OR
-                        3'b111: ALU_Control = 5'b00000; // AND
-                        default: ALU_Control = 5'b11111;
+                        3'b110: ALU_Control <= 5'b00001; // OR
+                        3'b111: ALU_Control <= 5'b00000; // AND
+                        default: ALU_Control <= 5'b11111;
                     endcase
                 end
                 // I
                 7'b0010011: begin
-                    WB_EN_ID = 1; 
-                    is_imm = 1;  // set is_immediate
-                    RegWrite = 1;
+                    WB_EN_ID <= 1; 
+                    is_imm <= 1;  // set is_immediate
+                    RegWrite <= 1;
                     case (Fun1)
                         3'b000: begin
-                            ALU_Control = 5'b00010; // ADDI                   
-                            ALUSrc_B = 2'b01;    
+                            ALU_Control <= 5'b00010; // ADDI                   
+                            ALUSrc_B <= 1;    
                         end
                         3'b010: begin
-                            ALU_Control = 5'b00101; // SLTI
-                            ALUSrc_B = 2'b01;
+                            ALU_Control <= 5'b00101; // SLTI
+                            ALUSrc_B <= 1;
                         end
                         3'b011: begin
-                            ALU_Control = 5'b00110; // SLTIU
-                            ALUSrc_B = 2'b01;
+                            ALU_Control <= 5'b00110; // SLTIU
+                            ALUSrc_B <= 1;
                         end
                         3'b100: begin
-                            ALU_Control = 5'b00100; // XORI
-                            ALUSrc_B = 2'b01;
+                            ALU_Control <= 5'b00100; // XORI
+                            ALUSrc_B <= 1;
                         end
                         3'b110: begin
-                            ALU_Control = 5'b00001; // ORI
-                            ALUSrc_B = 2'b01;
+                            ALU_Control <= 5'b00001; // ORI
+                            ALUSrc_B <= 1;
                         end
                         3'b111: begin
-                            ALU_Control = 5'b00000; // ANDI
-                            ALUSrc_B = 2'b01; 
+                            ALU_Control <= 5'b00000; // ANDI
+                            ALUSrc_B <= 1; 
                         end
                         3'b001: begin
-                            ALU_Control = 5'b00111; // SLLI
-                            ALUSrc_B = 2'b01;
+                            ALU_Control <= 5'b00111; // SLLI
+                            ALUSrc_B <= 1;
                         end
                         3'b101: begin
-                            ALUSrc_B = 2'b01;
+                            ALUSrc_B <= 1;
                             case (Fun2)
-                                7'b0000000: ALU_Control = 5'b01000; // SRLI
-                                7'b0100000: ALU_Control = 5'b01001; // SRAI
+                                7'b0000000: ALU_Control <= 5'b01000; // SRLI
+                                7'b0100000: ALU_Control <= 5'b01001; // SRAI
                             endcase
                         end
                     endcase
                 end
                 7'b0000011: begin	// l
-                    WB_EN_ID = 1;
-                    is_imm = 1;
-                    ST_or_BNE = 1;
-                    MEM_R_EN_ID = 1;
+                    WB_EN_ID <= 1;
+                    is_imm <= 1;
+                    ST_or_BNE <= 1;
+                    MEM_R_EN_ID <= 1;
 
-                    ALU_Control = 5'b00010;
-                    ALUSrc_B = 2'b01;
-                    DatatoReg = 2'b01;
-                    RegWrite = 1;
+                    ALU_Control <= 5'b00010;
+                    ALUSrc_B <= 1;
+                    DatatoReg <= 2'b01;
+                    RegWrite <= 1;
                     case (Fun1)
                         3'b000: begin // LB
-                            B_H_W = 2'b01; // byte
+                            B_H_W <= 2'b01; // byte
                         end
                         3'b001: begin // LH
-                            B_H_W = 2'b10; // half word
+                            B_H_W <= 2'b10; // half word
                         end
                         3'b100: begin // LBU
-                            B_H_W = 2'b01; // byte
-                            sign = 1'b0;
+                            B_H_W <= 2'b01; // byte
+                            sign <= 1'b0;
                         end
                         3'b101: begin // LHU
-                            B_H_W = 2'b10; // half word
-                            sign = 1'b0;
+                            B_H_W <= 2'b10; // half word
+                            sign <= 1'b0;
                         end
                         // 3'b010:; // LW
                     endcase
                 end
                 7'b0100011: begin   // S
-                    is_imm = 1;
-                    ST_or_BNE = 1;
-                    MEM_W_EN_ID = 1;
+                    is_imm <= 1;
+                    ST_or_BNE <= 1;
+                    MEM_W_EN_ID <= 1;
 
-                    ALU_Control = 5'b00010;
-                    ALUSrc_B = 2'b01;
-                    mem_w = 1;
+                    ALU_Control <= 5'b00010;
+                    ALUSrc_B <= 1;
+                    mem_w <= 1;
                     case (Fun1)
                         3'b000: begin
-                            B_H_W = 2'b01; // byte
+                            B_H_W <= 2'b01; // byte
                         end
                         3'b001: begin
-                            B_H_W = 2'b10; // half word
+                            B_H_W <= 2'b10; // half word
                         end
                         // 3'b010: ; // SW
                     endcase
                 end
                 7'b1100011: begin	// Branch
-                    is_imm = 1;
+                    is_imm <= 1;
                     case (Fun1)
                         3'b000: begin // BEQ
-                            ALU_Control = 5'b00011; 
-                            Branch = {1'b0, zero};
+                            ALU_Control <= 5'b00011; 
+                            Branch <= {1'b0, zero};
                         end 
                         3'b001: begin // BNE
-                            ST_or_BNE = 1;
-                            ALU_Control = 5'b00011;
-                            Branch = 2'b01;
-                            //Branch = {1'b0, zero};
+                            ST_or_BNE <= 1;
+                            ALU_Control <= 5'b00011;
+                            //Branch <= 2'b01;
+                            Branch <= {1'b0, ~zero};
                         end
                         3'b100: begin // BLT
-                            ALU_Control = 5'b00101;
-                            Branch = {1'b0, zero};
+                            ALU_Control <= 5'b00101;
+                            Branch <= {1'b0, zero};
                         end
                         3'b101: begin // BGE
-                            ALU_Control = 5'b01010;
-                            Branch = {1'b0, zero};
+                            ALU_Control <= 5'b01010;
+                            Branch <= {1'b0, zero};
                         end
                         3'b110: begin // BLTU
-                            ALU_Control = 5'b00110;
-                            Branch = {1'b0, zero}; 
+                            ALU_Control <= 5'b00110;
+                            Branch <= {1'b0, zero}; 
                         end
                         3'b111: begin // BGEU
-                            ALU_Control = 5'b01011;
-                            Branch = {1'b0, zero};
+                            ALU_Control <= 5'b01011;
+                            Branch <= {1'b0, zero};
                         end
                     endcase
                 end
                 7'b1101111: begin	// jal
-                    is_imm = 1;
-                    Branch = 2'b10;
-                    DatatoReg = 2'b11;
-                    RegWrite = 1;
+                    is_imm <= 1;
+                    Branch <= 2'b10;
+                    DatatoReg <= 2'b11;
+                    RegWrite <= 1;
                 end
                 7'b1100111: begin   // jalr
-                    Branch = 2'b11;
-                    DatatoReg = 2'b11;
-                    RegWrite = 1;
+                    Branch <= 2'b11;
+                    DatatoReg <= 2'b11;
+                    RegWrite <= 1;
                 end
                 7'b0110111: begin    // lui
-                    DatatoReg = 2'b10;
-                    RegWrite = 1;
+                    DatatoReg <= 2'b10;
+                    RegWrite <= 1;
                 end
                 7'b0010111: begin   // AUIPC
-                    DatatoReg = 2'b10;
-                    RegWrite = 1;
+                    DatatoReg <= 2'b10;
+                    RegWrite <= 1;
                 end
-                default: ALU_Control = 5'b11111;
+                default: ALU_Control <= 5'b11111;
             endcase
         end
         else if (hazard_detected == 1) begin
             // hazard detected
-            {ALU_Control, WB_EN_ID, MEM_W_EN_ID} = 0;
+            {ALU_Control, WB_EN_ID, MEM_W_EN_ID} <= 0;
         end
-         $display("ST_or_BNE: %t\nBranch: %t\nOPcode: %t\nFun1: %t\nFun2: %t\nCycle: %t\n", ST_or_BNE, Branch, OPcode, Fun1, Fun2, $time);
+        // $display("ST_or_BNE: %t\nBranch: %t\nOPcode: %t\nFun1: %t\nFun2: %t\nCycle: %t\n", ST_or_BNE, Branch, OPcode, Fun1, Fun2, $time);
 	end
 endmodule
 

@@ -49,7 +49,7 @@ module ID_Zero_Generator(
             5'b01011: begin // BGEU
                 res = (A >= B) ? zero_0 : one;
             end
-			default: res = 32'hz;
+			default: res = 32'h0;
 		endcase
 	end
 	assign zero = (res == 0) ? 1 : 0;

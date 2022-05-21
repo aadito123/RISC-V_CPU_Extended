@@ -42,7 +42,7 @@ module REG_ID_EXE(
         input MEM_R_EN_IN,
         input MEM_W_EN_IN,
         input WB_EN_IN,
-
+        
         output reg MEM_R_EN, 
         output reg MEM_W_EN, 
         output reg WB_EN,
@@ -56,12 +56,10 @@ module REG_ID_EXE(
         output reg ID_EXE_mem_w,
         output reg [1:0] ID_EXE_DatatoReg,
         output reg ID_EXE_RegWrite,
-        
         output reg [4:0] ID_EXE_written_reg,
         output reg [4:0] ID_EXE_read_reg1,
         output reg [4:0] ID_EXE_read_reg2
     );
-
     always @ (posedge clk or posedge rst) begin
         if (rst == 1 || ID_EXE_dstall == 1) begin
             ID_EXE_inst_in      <= 32'h00000013;
@@ -74,7 +72,7 @@ module REG_ID_EXE(
             ID_EXE_DatatoReg    <= 2'b00;
             ID_EXE_RegWrite     <= 1'b0;
             
-            ID_EXE_written_reg  <= 5'b00000;
+            ID_EXE_written_reg  <= 5'b00000; 
             ID_EXE_read_reg1    <= 5'b00000;
             ID_EXE_read_reg2    <= 5'b00000;
 

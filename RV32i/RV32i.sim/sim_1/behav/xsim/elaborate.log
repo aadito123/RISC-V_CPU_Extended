@@ -4,5 +4,33 @@ Running: C:/Xilinx/Vivado/2020.2/bin/unwrapped/win64.o/xelab.exe -wto 8c0da72728
 Using 2 slave threads.
 Starting static elaboration
 Pass Through NonSizing Optimizer
+WARNING: [VRFC 10-3091] actual bit length 5 differs from formal bit length 32 for port 'reg1' [P:/Desktop/RISC-V_CPU_Extended/RV32i/RV32i.srcs/sources_1/new/RV32iPCPU.v:296]
+WARNING: [VRFC 10-3091] actual bit length 5 differs from formal bit length 32 for port 'reg2' [P:/Desktop/RISC-V_CPU_Extended/RV32i/RV32i.srcs/sources_1/new/RV32iPCPU.v:297]
 Completed static elaboration
-INFO: [XSIM 43-4323] No Change in HDL. Linking previously generated obj files to create kernel
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling module xil_defaultlib.Data_Stall
+Compiling module xil_defaultlib.Control_Stall
+Compiling module xil_defaultlib.HazardDetection
+Compiling module xil_defaultlib.ForwardingUnit
+Compiling module xil_defaultlib.REG32
+Compiling module xil_defaultlib.add_32
+Compiling module xil_defaultlib.Mux4to1b32
+Compiling module xil_defaultlib.REG_IF_ID
+Compiling module xil_defaultlib.Get_rw_regs
+Compiling module xil_defaultlib.Controler
+Compiling module xil_defaultlib.conditionChecker
+Compiling module xil_defaultlib.Regs
+Compiling module xil_defaultlib.SignExt
+Compiling module xil_defaultlib.ID_Zero_Generator
+Compiling module xil_defaultlib.REG_ID_EXE
+Compiling module xil_defaultlib.Mux3to1b32
+Compiling module xil_defaultlib.ALU
+Compiling module xil_defaultlib.REG_EXE_MEM
+Compiling module xil_defaultlib.REG_MEM_WB
+Compiling module xil_defaultlib.LUI_or_AUIPC
+Compiling module xil_defaultlib.RV32iPCPU
+Compiling module xil_defaultlib.Top
+Compiling module xil_defaultlib.glbl
+Built simulation snapshot Top_behav

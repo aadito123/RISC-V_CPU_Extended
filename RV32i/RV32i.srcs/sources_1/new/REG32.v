@@ -25,8 +25,8 @@ module REG32(
     input rst,
     input CE,
     input [31:0] D,
-    output reg [31:0] Q = 0,
-    input PC_dstall
+    input PC_dstall,
+    output reg [31:0] Q = 0
     );
     
     always @ (posedge clk or posedge rst) begin

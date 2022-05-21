@@ -57,6 +57,7 @@ module REG_EXE_MEM(
     );
     always @ (posedge clk or posedge rst) begin
         if (rst == 1) begin
+            { WB_EN, MEM_R_EN, MEM_W_EN } <= 3'b000;
             EXE_MEM_inst_in     <= 32'h00000013;
             EXE_MEM_PC          <= 32'h00000000;
             EXE_MEM_ALU_out     <= 32'h00000000;
@@ -67,20 +68,21 @@ module REG_EXE_MEM(
             EXE_MEM_written_reg <= 5'b00000;
             EXE_MEM_read_reg1   <= 5'b00000;
             EXE_MEM_read_reg2   <= 5'b00000;
-            { WB_EN, MEM_R_EN, MEM_W_EN } <= 3'b000;
+            
         end
         else if (CE) begin
+            { WB_EN, MEM_R_EN, MEM_W_EN } <= { WB_EN_IN, MEM_R_EN_IN, MEM_W_EN_IN };
             EXE_MEM_inst_in     <= inst_in;
             EXE_MEM_PC          <= PC;
-            EXE_MEM_ALU_out     <= ALU_out;
-            EXE_MEM_Data_out    <= Data_out;
+            EXE_MEM_Data_out    <= Data_out; 
+            EXE_MEM_ALU_out     <= ALU_out; 
             EXE_MEM_mem_w       <= mem_w;
             EXE_MEM_DatatoReg   <= DatatoReg;
             EXE_MEM_RegWrite    <= RegWrite;
             EXE_MEM_written_reg <= written_reg;
             EXE_MEM_read_reg1   <= read_reg1;
             EXE_MEM_read_reg2   <= read_reg2;
-            { WB_EN, MEM_R_EN, MEM_W_EN } <= { WB_EN_IN, MEM_R_EN_IN, MEM_W_EN_IN };
+            //$display("REG_EXE_MEM: %t, %t, %t\n", $time, ALU_out, EXE_MEM_ALU_out);
         end
     end
 endmodule

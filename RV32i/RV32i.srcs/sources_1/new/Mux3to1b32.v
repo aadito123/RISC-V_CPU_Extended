@@ -32,7 +32,7 @@ module Mux3to1b32(
 			2'b00: o = I0;
 			2'b01: o = I1;
 			2'b10: o = I2;
-			default: o = I0;
+			default: o = 32'h00000000;
 		endcase
 	end
 endmodule

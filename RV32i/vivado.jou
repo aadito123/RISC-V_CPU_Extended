@@ -1,18 +1,129 @@
 #-----------------------------------------------------------
-# Vivado v2020.1 (64-bit)
-# SW Build 2902540 on Wed May 27 19:54:49 MDT 2020
-# IP Build 2902112 on Wed May 27 22:43:36 MDT 2020
-# Start of session at: Sat Mar 13 08:59:31 2021
-# Process ID: 41608
-# Current directory: D:/2021Spring/Arch/Project/RISC-V CPU/RV32i
-# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent35444 D:\2021Spring\Arch\Project\RISC-V CPU\RV32i\RV32i.xpr
-# Log file: D:/2021Spring/Arch/Project/RISC-V CPU/RV32i/vivado.log
-# Journal file: D:/2021Spring/Arch/Project/RISC-V CPU/RV32i\vivado.jou
+# Vivado v2020.2 (64-bit)
+# SW Build 3064766 on Wed Nov 18 09:12:45 MST 2020
+# IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
+# Start of session at: Sat May 21 11:10:02 2022
+# Process ID: 5224
+# Current directory: P:/Desktop/RISC-V_CPU_Extended/RV32i
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent7448 P:\Desktop\RISC-V_CPU_Extended\RV32i\RV32i.xpr
+# Log file: P:/Desktop/RISC-V_CPU_Extended/RV32i/vivado.log
+# Journal file: P:/Desktop/RISC-V_CPU_Extended/RV32i\vivado.jou
 #-----------------------------------------------------------
 start_gui
-open_project {D:/2021Spring/Arch/Project/RISC-V CPU/RV32i/RV32i.xpr}
+open_project P:/Desktop/RISC-V_CPU_Extended/RV32i/RV32i.xpr
 update_compile_order -fileset sources_1
 launch_simulation
-open_wave_config {D:/2021Spring/Arch/Project/RISC-V CPU/RV32i/Top_behav.wcfg}
+open_wave_config P:/Desktop/RISC-V_CPU_Extended/RV32i/Top_behav.wcfg
 source Top.tcl
+run 1 ps
 relaunch_sim
+relaunch_sim
+add_bp {P:/Desktop/RISC-V_CPU_Extended/RV32i/RV32i.srcs/sim_1/new/Top.v} 85
+relaunch_sim
+run 1 ps
+run 1 ps
+set_property SOURCE_SET sources_1 [get_filesets sim_1]
+add_files -fileset sim_1 -norecurse P:/Desktop/RISC-V_CPU_Extended/RV32i/RV32i.sim/sim_1/behav/xsim/ROM_data.txt.txt
+relaunch_sim
+run 1 ps
+run 1 ps
+run 1 ps
+relaunch_sim
+run 1 ps
+run 1 ps
+run 1 ps
+run 1 ps
+run 1 ps
+run 1 ps
+restart
+run 1 ps
+run 1 ps
+run 1 ps
+run 1 ps
+run 1 ps
+step
+step
+step
+step
+step
+step
+run 1 ps
+restart
+run 1 ps
+run 1 ps
+run 1 ps
+run 1 ps
+run 1 ps
+step
+step
+step
+step
+step
+run 1 ps
+add_bp {P:/Desktop/RISC-V_CPU_Extended/RV32i/RV32i.srcs/sources_1/new/Controler.v} 47
+remove_bps -file {P:/Desktop/RISC-V_CPU_Extended/RV32i/RV32i.srcs/sources_1/new/Controler.v} -line 47
+add_bp {P:/Desktop/RISC-V_CPU_Extended/RV32i/RV32i.srcs/sources_1/new/Regs.v} 37
+add_bp {P:/Desktop/RISC-V_CPU_Extended/RV32i/RV32i.srcs/sources_1/new/Regs.v} 38
+add_bp {P:/Desktop/RISC-V_CPU_Extended/RV32i/RV32i.srcs/sources_1/new/REG_ID_EXE.v} 63
+add_bp {P:/Desktop/RISC-V_CPU_Extended/RV32i/RV32i.srcs/sources_1/new/REG_ID_EXE.v} 64
+add_bp {P:/Desktop/RISC-V_CPU_Extended/RV32i/RV32i.srcs/sources_1/new/REG_ID_EXE.v} 68
+add_bp {P:/Desktop/RISC-V_CPU_Extended/RV32i/RV32i.srcs/sources_1/new/REG_ID_EXE.v} 81
+add_bp {P:/Desktop/RISC-V_CPU_Extended/RV32i/RV32i.srcs/sources_1/new/REG_ID_EXE.v} 90
+run 1 ps
+restart
+remove_bps -file {P:/Desktop/RISC-V_CPU_Extended/RV32i/RV32i.srcs/sources_1/new/REG_ID_EXE.v} -line 81
+remove_bps -file {P:/Desktop/RISC-V_CPU_Extended/RV32i/RV32i.srcs/sources_1/new/REG_ID_EXE.v} -line 90
+remove_bps -file {P:/Desktop/RISC-V_CPU_Extended/RV32i/RV32i.srcs/sources_1/new/REG_ID_EXE.v} -line 63
+remove_bps -file {P:/Desktop/RISC-V_CPU_Extended/RV32i/RV32i.srcs/sources_1/new/REG_ID_EXE.v} -line 64
+remove_bps -file {P:/Desktop/RISC-V_CPU_Extended/RV32i/RV32i.srcs/sources_1/new/REG_ID_EXE.v} -line 68
+remove_bps -file {P:/Desktop/RISC-V_CPU_Extended/RV32i/RV32i.srcs/sources_1/new/Regs.v} -line 37
+remove_bps -file {P:/Desktop/RISC-V_CPU_Extended/RV32i/RV32i.srcs/sources_1/new/Regs.v} -line 38
+run 1 ps
+run 1 ps
+run 1 ps
+run 1 ps
+run 1 ps
+add_bp {P:/Desktop/RISC-V_CPU_Extended/RV32i/RV32i.srcs/sources_1/new/REG_ID_EXE.v} 63
+add_bp {P:/Desktop/RISC-V_CPU_Extended/RV32i/RV32i.srcs/sources_1/new/REG_ID_EXE.v} 64
+add_bp {P:/Desktop/RISC-V_CPU_Extended/RV32i/RV32i.srcs/sources_1/new/REG_ID_EXE.v} 68
+add_bp {P:/Desktop/RISC-V_CPU_Extended/RV32i/RV32i.srcs/sources_1/new/REG_ID_EXE.v} 81
+add_bp {P:/Desktop/RISC-V_CPU_Extended/RV32i/RV32i.srcs/sources_1/new/REG_ID_EXE.v} 90
+add_bp {P:/Desktop/RISC-V_CPU_Extended/RV32i/RV32i.srcs/sources_1/new/Regs.v} 37
+add_bp {P:/Desktop/RISC-V_CPU_Extended/RV32i/RV32i.srcs/sources_1/new/Regs.v} 38
+remove_bps -file {P:/Desktop/RISC-V_CPU_Extended/RV32i/RV32i.srcs/sources_1/new/Regs.v} -line 37
+add_bp {P:/Desktop/RISC-V_CPU_Extended/RV32i/RV32i.srcs/sources_1/new/Mux3to1b32.v} 30
+run 1 ps
+run 1 ps
+run 1 ps
+run 1 ps
+run 1 ps
+run 1 ps
+run 1 ps
+run 1 ps
+run 1 ps
+restart
+remove_bps -file {P:/Desktop/RISC-V_CPU_Extended/RV32i/RV32i.srcs/sources_1/new/Mux3to1b32.v} -line 30
+remove_bps -file {P:/Desktop/RISC-V_CPU_Extended/RV32i/RV32i.srcs/sources_1/new/Regs.v} -line 38
+remove_bps -file {P:/Desktop/RISC-V_CPU_Extended/RV32i/RV32i.srcs/sources_1/new/REG_ID_EXE.v} -line 90
+remove_bps -file {P:/Desktop/RISC-V_CPU_Extended/RV32i/RV32i.srcs/sources_1/new/REG_ID_EXE.v} -line 81
+remove_bps -file {P:/Desktop/RISC-V_CPU_Extended/RV32i/RV32i.srcs/sources_1/new/REG_ID_EXE.v} -line 68
+remove_bps -file {P:/Desktop/RISC-V_CPU_Extended/RV32i/RV32i.srcs/sources_1/new/REG_ID_EXE.v} -line 64
+remove_bps -file {P:/Desktop/RISC-V_CPU_Extended/RV32i/RV32i.srcs/sources_1/new/REG_ID_EXE.v} -line 63
+run 4 ps
+run 4 ps
+run 4 ps
+run 4 ps
+run 4 ps
+add_bp {P:/Desktop/RISC-V_CPU_Extended/RV32i/RV32i.srcs/sources_1/new/Mux3to1b32.v} 30
+add_bp {P:/Desktop/RISC-V_CPU_Extended/RV32i/RV32i.srcs/sources_1/new/Regs.v} 38
+add_bp {P:/Desktop/RISC-V_CPU_Extended/RV32i/RV32i.srcs/sources_1/new/REG_ID_EXE.v} 63
+add_bp {P:/Desktop/RISC-V_CPU_Extended/RV32i/RV32i.srcs/sources_1/new/REG_ID_EXE.v} 64
+add_bp {P:/Desktop/RISC-V_CPU_Extended/RV32i/RV32i.srcs/sources_1/new/REG_ID_EXE.v} 90
+add_bp {P:/Desktop/RISC-V_CPU_Extended/RV32i/RV32i.srcs/sources_1/new/REG_ID_EXE.v} 81
+add_bp {P:/Desktop/RISC-V_CPU_Extended/RV32i/RV32i.srcs/sources_1/new/REG_ID_EXE.v} 68
+run 4 ps
+run 4 ps
+run 4 ps
+run 4 ps
+run 4 ps
+run 4 ps

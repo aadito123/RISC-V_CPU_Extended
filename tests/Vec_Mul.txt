@@ -89,7 +89,7 @@ bne t2, x0, InitB
 addi t1, s1, 0  # -----
 addi t2, s2, 0
 addi t3, s3, 0
-VecMul: llw a0, 0(t1)    # ---
+VecMul: lw a0, 0(t1)    # ---
 lw a1, 0(t2)
 addi s5, x0, 0
 addi t5, x0, 0

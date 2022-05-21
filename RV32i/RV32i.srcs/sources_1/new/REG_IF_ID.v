@@ -26,7 +26,7 @@ module REG_IF_ID(
         input CE,
         input IF_ID_dstall,
         input IF_ID_cstall,
-        
+        input hazard,
         input [31:0] inst_in,
         input [31:0] PC,
         
@@ -39,7 +39,7 @@ module REG_IF_ID(
             IF_ID_PC <= 32'h00000000;
         end
         // A bubble here is a nop, or rather, "addi x0, x0, 0"
-        if (IF_ID_dstall == 0) begin
+        if (IF_ID_dstall == 0 && ~hazard) begin
             if (rst == 1 || IF_ID_cstall == 1'b1) begin
                 IF_ID_inst_in <= 32'h00000013;
                 IF_ID_PC <= 32'h00000000;

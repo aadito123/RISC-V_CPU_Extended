@@ -26,7 +26,7 @@ module SignExt(
     );
     
     always @ (*) begin
-        imm_32 = 0;
+        imm_32 = 32'h00000000;
         case (inst_in[6:0]) 
             // L
             7'b0000011: begin
