@@ -44,7 +44,6 @@ module Top;
         .rst(rst),
         .data_in(data_in),
         .inst_in(inst_in),
-        
         .ALU_out(addr_out),
         .data_out(data_out),
         .mem_w(data_valid),
@@ -60,7 +59,8 @@ module Top;
             end
         end
         else begin
-            if (data_valid == 1'b1) begin           // write data memory
+            $display("Write to RAM at cycle %t: value = %t, addr = %t, valid = %t", $time, data_out, addr_out[15:2], data_valid);
+            if (data_valid == 0'b1) begin           // write data memory
                 Data_RAM[addr_out[15:2]] <= data_out;
             end
         end

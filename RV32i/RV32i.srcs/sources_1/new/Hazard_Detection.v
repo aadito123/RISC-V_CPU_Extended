@@ -24,5 +24,5 @@ module HazardDetection(
     assign hazard = (exe_has_hazard || mem_has_hazard);
     assign instr_is_branch = branch_comm == 7'b1100011; // conditional branch
 
-    assign hazard_detected = (instr_is_branch && hazard) || (MEM_R_EN_EXE && mem_has_hazard);
+    assign hazard_detected = (instr_is_branch && hazard) || (/*MEM_R_EN_EXE &&*/ mem_has_hazard);
 endmodule

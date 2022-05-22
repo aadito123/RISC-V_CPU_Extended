@@ -26,7 +26,7 @@ module Regs(
 		input [4:0] R_addr_A, 
 		input [4:0] R_addr_B, 
 		input [4:0] Wt_addr, 
-		input [31:0] Wt_data, 
+		input [31:0] Wt_data,
 		input L_S,  // we
 		output [31:0] rdata_A, 
 		output [31:0] rdata_B
@@ -43,8 +43,26 @@ module Regs(
 				register[i] <= 0;
 		end 
 		else begin
-		    if ((Wt_addr != 0) && (L_S == 1)) // write
+		    if ((Wt_addr != 0) && (L_S == 1)) // write value to register file
 		        register[Wt_addr] <= Wt_data;
 		end
 	end
 endmodule
+// WB_EN_MEM
+/*
+register[0] = x0
+register[6] = t1
+register[7] = t2
+register[9] = s1
+register[10] = a1
+register[11] = s5
+register[13] = a0
+register[18] = s2
+register[19] = s3
+register[20] = s4
+register[21] = s5
+register[28] = t3
+register[29] = t4
+register[30] = t5
+register[31] = t6
+*/
