@@ -59,8 +59,6 @@ module RV32iPCPU(
 
     wire [1:0] B_H_W;       // WB // not used yet
     wire sign;              // WB // not used yet
-    //    wire RegDst; // WB
-    //    wire Jal; // WB
 
     // IF_ID
     wire [31:0] IF_ID_inst_in;
@@ -90,7 +88,6 @@ module RV32iPCPU(
     wire [31:0] ID_EXE_ALU_out;
 
     // EXE_MEM
-    wire [31:0] pre_EXE_MEM_Data_out;
     wire [31:0] EXE_MEM_inst_in;
     wire [31:0] EXE_MEM_PC;
     wire [31:0] EXE_MEM_ALU_out;
@@ -110,12 +107,6 @@ module RV32iPCPU(
     wire [1:0] MEM_WB_DatatoReg;
     wire MEM_WB_RegWrite;
 
-    // // Stall
-    // wire PC_dstall;
-    // wire IF_ID_cstall;
-    // wire IF_ID_dstall;
-    // wire ID_EXE_dstall;
-
     // Hazard + Forwarding signals 
     // source: https://github.dev/mhyousefi/MIPS-pipeline-processor
     wire MEM_R_EN_ID, MEM_R_EN_EXE, MEM_R_EN_MEM, MEM_R_EN_WB;
@@ -125,32 +116,9 @@ module RV32iPCPU(
     wire hazard_detected, is_imm, ST_or_BNE;
 
     wire [1:0] output_ALU1, output_ALU2, output_store;
-    
-    // Data_Stall _dstall_ (
-    //     .IF_ID_written_reg(IF_ID_written_reg),
-    //     .IF_ID_read_reg1(IF_ID_read_reg1),
-    //     .IF_ID_read_reg2(IF_ID_read_reg2),
-        
-    //     .ID_EXE_written_reg(ID_EXE_written_reg),
-    //     .ID_EXE_read_reg1(ID_EXE_read_reg1),
-    //     .ID_EXE_read_reg2(ID_EXE_read_reg2),
-        
-    //     .EXE_MEM_written_reg(EXE_MEM_written_reg),
-    //     .EXE_MEM_read_reg1(EXE_MEM_read_reg1),
-    //     .EXE_MEM_read_reg2(EXE_MEM_read_reg2),
-        
-    //     .PC_dstall(PC_dstall),
-    //     .IF_ID_dstall(IF_ID_dstall),
-    //     .ID_EXE_dstall(ID_EXE_dstall)
-    // );
-        
-    // Control_Stall _cstall_ (
-    //     .Branch(Branch[1:0]),
-    //     .IF_ID_cstall(IF_ID_cstall)
-    // );
 
     assign ALU_out = EXE_MEM_ALU_out;
-    assign data_out = EXE_MEM_Data_out;
+    assign data_out = ID_EXE_ALU_Control != 5'b11111 ? EXE_MEM_Data_out : EXE_MEM_ALU_out; // checks if the program is over
     assign mem_w = EXE_MEM_mem_w;
 
     HazardDetection hazard_detection(
@@ -199,7 +167,6 @@ module RV32iPCPU(
         .rst(rst),
         .hazard(hazard_detected),
         .Q(PC_out[31:0])
-        // .PC_dstall(PC_dstall)
         );
 
     add_32  ADD_Branch (
@@ -228,7 +195,6 @@ module RV32iPCPU(
 
     REG_IF_ID _if_id_ (
         .clk(clk), .rst(rst), .CE(V5),
-        // .IF_ID_dstall(IF_ID_dstall), .IF_ID_cstall(IF_ID_cstall),
         // Input
         .inst_in(inst_in),
         .PC(PC_out),
@@ -323,7 +289,7 @@ module RV32iPCPU(
     ID_Zero_Generator _id_zero_ (.A(ALU_A), .B(ALU_B), .ALU_operation(ALU_Control), .zero(zero));
 
     REG_ID_EXE _id_exe_ (
-        .clk(clk), .rst(rst), .CE(V5), /*.ID_EXE_dstall(ID_EXE_dstall),*/
+        .clk(clk), .rst(rst), .CE(V5),
         // Input
         .inst_in(IF_ID_inst_in),
         .PC(IF_ID_PC),
@@ -411,15 +377,7 @@ module RV32iPCPU(
         .o(ALU_B_Mux_out)
     );
 
-    // Mux3to1b32 ALU3 (
-    //     .s(output_store),
-    //     .I0(ID_EXE_ALU_out),
-    //     .I1(EXE_MEM_ALU_out),
-    //     .I2(Wt_data),
-    //     .o(ALU_out_Mux_out)
-    // );
     SpecialMux4to1b32 ALU3 (
-        .end_condition_ALU_Control(ID_EXE_ALU_Control),
         .s0(MEM_W_EN_ID),
         .s1(output_store),
         .I0(ID_EXE_ALU_out),

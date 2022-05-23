@@ -11,13 +11,13 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="193fs"></ZoomStartTime>
-      <ZoomEndTime time="209fs"></ZoomEndTime>
-      <Cursor1Time time="206fs"></Cursor1Time>
+      <ZoomStartTime time="33fs"></ZoomStartTime>
+      <ZoomEndTime time="44fs"></ZoomEndTime>
+      <Cursor1Time time="35fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="222"></NameColumnWidth>
-      <ValueColumnWidth column_width="111"></ValueColumnWidth>
+      <ValueColumnWidth column_width="107"></ValueColumnWidth>
    </column_width_setting>
    <WVObjectSize size="97" />
    <wvobject fp_name="/Top/clk" type="logic">
@@ -89,6 +89,7 @@
    <wvobject fp_name="/Top/_rv32ipcpu_/U2/register" type="array">
       <obj_property name="ElementShortName">register[1:31][31:0]</obj_property>
       <obj_property name="ObjectShortName">register[1:31][31:0]</obj_property>
+      <obj_property name="isExpanded"></obj_property>
       <wvobject fp_name="/Top/_rv32ipcpu_/U2/register[1]" type="array">
          <obj_property name="ElementShortName">[1][31:0]</obj_property>
          <obj_property name="ObjectShortName">[1][31:0]</obj_property>
@@ -112,7 +113,6 @@
       <wvobject fp_name="/Top/_rv32ipcpu_/U2/register[6]" type="array">
          <obj_property name="ElementShortName">[6][31:0]</obj_property>
          <obj_property name="ObjectShortName">[6][31:0]</obj_property>
-         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
       </wvobject>
       <wvobject fp_name="/Top/_rv32ipcpu_/U2/register[7]" type="array">
          <obj_property name="ElementShortName">[7][31:0]</obj_property>
@@ -379,7 +379,6 @@
    <wvobject fp_name="group97" type="group">
       <obj_property name="label">Pipeline_Regs</obj_property>
       <obj_property name="DisplayName">label</obj_property>
-      <obj_property name="isExpanded"></obj_property>
       <wvobject fp_name="/Top/_rv32ipcpu_/IF_ID_inst_in" type="array">
          <obj_property name="ElementShortName">IF_ID_inst_in[31:0]</obj_property>
          <obj_property name="ObjectShortName">IF_ID_inst_in[31:0]</obj_property>

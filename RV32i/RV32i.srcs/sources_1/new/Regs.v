@@ -53,6 +53,7 @@ endmodule
 register[0] = x0
 register[6] = t1
 register[7] = t2
+register[8] = s0
 register[9] = s1
 register[10] = a1
 register[11] = s5
@@ -66,3 +67,4 @@ register[29] = t4
 register[30] = t5
 register[31] = t6
 */
+

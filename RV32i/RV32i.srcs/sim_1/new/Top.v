@@ -59,7 +59,7 @@ module Top;
             end
         end
         else begin
-            $display("Write to RAM at cycle %t: value = %t, addr = %t, valid = %t", $time, data_out, addr_out[15:2], data_valid);
+            //$display("Write to RAM at cycle %t: value = %t, addr = %t, valid = %t", $time, data_out, addr_out[15:2], data_valid);
             if (data_valid == 0'b1) begin           // write data memory
                 Data_RAM[addr_out[15:2]] <= data_out;
             end
