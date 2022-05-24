@@ -270,6 +270,7 @@ module RV32iPCPU(
         .Fun1(IF_ID_inst_in[14:12]),
         .Fun2(IF_ID_inst_in[31:25]),
         .zero(zero),
+        .hazard_detected(hazard_detected),
         // Output:
         .ALUSrc_A(ALUSrc_A),
         .ALUSrc_B(ALUSrc_B[1:0]),
