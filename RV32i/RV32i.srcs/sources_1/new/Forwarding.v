@@ -16,15 +16,15 @@ module ForwardingUnit(
         { output_ALU1, output_ALU2, output_store } <= 6'b000000; // non-blocking assign
 
 		// determining forwarding control signal for store value 
-        if (WB_EN_MEM && ST_src_EXE == dest_MEM) output_store <= 2'b01;
-        else if (WB_EN_WB && ST_src_EXE == dest_WB) output_store <= 2'b10;
+        if (WB_EN_MEM && ST_src_EXE == dest_MEM && ST_src_EXE != 5'b00000) output_store <= 2'b01;
+        else if (WB_EN_WB && ST_src_EXE == dest_WB && ST_src_EXE != 5'b00000) output_store <= 2'b10;
 
         // determining forwarding control signal for ALU val1
-        if (WB_EN_MEM && src1_EXE == dest_MEM) output_ALU1 <= 2'b01;
-        else if (WB_EN_WB && src1_EXE == dest_WB) output_ALU1 <= 2'b10;
+        if (WB_EN_MEM && src1_EXE == dest_MEM && src1_EXE != 5'b00000) output_ALU1 <= 2'b01;
+        else if (WB_EN_WB && src1_EXE == dest_WB && src1_EXE != 5'b00000) output_ALU1 <= 2'b10;
 
         // determining forwarding control signal for ALU val2
-        if (WB_EN_MEM && src2_EXE == dest_MEM) output_ALU2 <= 2'b01;
-        else if (WB_EN_WB && src2_EXE == dest_WB) output_ALU2 <= 2'b10;
+        if (WB_EN_MEM && src2_EXE == dest_MEM && src2_EXE != 5'b00000) output_ALU2 <= 2'b01;
+        else if (WB_EN_WB && src2_EXE == dest_WB && src2_EXE != 5'b00000) output_ALU2 <= 2'b10;
 	end
 endmodule

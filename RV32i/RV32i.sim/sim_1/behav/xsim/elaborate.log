@@ -1,6 +1,6 @@
-Vivado Simulator 2020.1
+Vivado Simulator 2020.2
 Copyright 1986-1999, 2001-2020 Xilinx, Inc. All Rights Reserved.
-Running: D:/Software/Xilinx/Vivado/2020.1/bin/unwrapped/win64.o/xelab.exe -wto 8c0da72728544b8a9865fae7ef12569a --incr --debug typical --relax --mt 2 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot Top_behav xil_defaultlib.Top xil_defaultlib.glbl -log elaborate.log 
+Running: C:/Xilinx/Vivado/2020.2/bin/unwrapped/win64.o/xelab.exe -wto 8c0da72728544b8a9865fae7ef12569a --incr --debug typical --relax --mt 2 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot Top_behav xil_defaultlib.Top xil_defaultlib.glbl -log elaborate.log 
 Using 2 slave threads.
 Starting static elaboration
 Pass Through NonSizing Optimizer
@@ -8,19 +8,21 @@ Completed static elaboration
 Starting simulation data flow analysis
 Completed simulation data flow analysis
 Time Resolution for simulation is 1ps
-Compiling module xil_defaultlib.Data_Stall
-Compiling module xil_defaultlib.Control_Stall
+Compiling module xil_defaultlib.HazardDetection
+Compiling module xil_defaultlib.ForwardingUnit
 Compiling module xil_defaultlib.REG32
 Compiling module xil_defaultlib.add_32
 Compiling module xil_defaultlib.Mux4to1b32
 Compiling module xil_defaultlib.REG_IF_ID
 Compiling module xil_defaultlib.Get_rw_regs
 Compiling module xil_defaultlib.Controler
+Compiling module xil_defaultlib.conditionChecker
 Compiling module xil_defaultlib.Regs
 Compiling module xil_defaultlib.SignExt
-Compiling module xil_defaultlib.Mux2to1b32
 Compiling module xil_defaultlib.ID_Zero_Generator
 Compiling module xil_defaultlib.REG_ID_EXE
+Compiling module xil_defaultlib.Mux3to1b32
+Compiling module xil_defaultlib.SpecialMux4to1b32
 Compiling module xil_defaultlib.ALU
 Compiling module xil_defaultlib.REG_EXE_MEM
 Compiling module xil_defaultlib.REG_MEM_WB

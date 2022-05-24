@@ -24,16 +24,16 @@ module REG32(
     input clk,
     input rst,
     input CE,
+    input hazard,
     input [31:0] D,
-    output reg [31:0] Q = 0,
-    input PC_dstall
+    output reg [31:0] Q = 0
     );
     
     always @ (posedge clk or posedge rst) begin
 	    if (rst == 1) Q <= 32'h00000000;
-	    if (PC_dstall == 0) begin
+        else begin
 		    if (rst == 1) Q <= 32'h00000000;
-		    else if (CE) Q <= D;
+		    else if (CE && ~hazard) Q <= D;
 		end
     end
     

@@ -24,7 +24,6 @@ module Top;
 
     reg clk;
     reg rst;
-    reg forwarding_EN; // new
     
     reg [31:0] Inst_ROM[0:16383];
     reg [31:0] Data_RAM[0:16383];
@@ -43,7 +42,6 @@ module Top;
     RV32iPCPU _rv32ipcpu_ (
         .clk(clk),
         .rst(rst),
-        .forwarding_EN(forwarding_EN),
         .data_in(data_in),
         .inst_in(inst_in),
         .ALU_out(addr_out),
@@ -61,7 +59,8 @@ module Top;
             end
         end
         else begin
-            if (data_valid == 1'b1) begin           // write data memory
+            //$display("Write to RAM at cycle %t: value = %t, addr = %t, valid = %t", $time, data_out, addr_out[15:2], data_valid);
+            if (data_valid == 0'b1) begin           // write data memory
                 Data_RAM[addr_out[15:2]] <= data_out;
             end
         end
@@ -69,21 +68,19 @@ module Top;
         
     initial begin
         // Initialize Inst ROM and Data RAM
-        $readmemh("ROM_data.txt", Inst_ROM);    // Please find this file in `....../[RV32i directory]/RV32i.sim/sim_1/behav/xsim/ROM_data.txt`
+        $readmemh("ROM_data.txt.txt", Inst_ROM);    // Please find this file in `....../[RV32i directory]/RV32i.sim/sim_1/behav/xsim/ROM_data.txt`
                                                    // When using "Assembler", you can get the hex numbers at the right-hand side text box
         for (i = 0; i < 16384; i = i + 1) begin
             Data_RAM[i] = 32'h0;
         end
         clk = 0;
         rst = 0;
-        forwarding_EN = 0;
         #1;
         rst = 1;
         #1;
         rst = 0;
         
     end 
-    
     always begin
         clk = ~clk;
         #1;
@@ -91,7 +88,6 @@ module Top;
             $display("Simulation cycle count: %t\n", $time);
             $stop;
         end
-        $display("Cycle count: %t\n", $time);
     end
 
 endmodule

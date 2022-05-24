@@ -18,13 +18,10 @@
 // Additional Comments:
 // 
 //////////////////////////////////////////////////////////////////////////////////
-
-
 module REG_ID_EXE(
         input clk,
         input rst,
         input CE,
-        input ID_EXE_dstall,
         
         input [31:0] inst_in,
         input [31:0] PC,
@@ -44,12 +41,7 @@ module REG_ID_EXE(
         input MEM_R_EN_IN,
         input MEM_W_EN_IN,
         input WB_EN_IN,
-        input [1:0] output_ALU1,
-        input [1:0] output_ALU2,
-        input [1:0] output_store,
-        input [31:0] EXE_MEM_ALU_out,
-        input [31:0] MEM_WB_ALU_out,
-
+        
         output reg MEM_R_EN, 
         output reg MEM_W_EN, 
         output reg WB_EN,
@@ -63,14 +55,12 @@ module REG_ID_EXE(
         output reg ID_EXE_mem_w,
         output reg [1:0] ID_EXE_DatatoReg,
         output reg ID_EXE_RegWrite,
-        
         output reg [4:0] ID_EXE_written_reg,
         output reg [4:0] ID_EXE_read_reg1,
         output reg [4:0] ID_EXE_read_reg2
     );
-
     always @ (posedge clk or posedge rst) begin
-        if (rst == 1 || ID_EXE_dstall == 1) begin
+        if (rst == 1) begin
             ID_EXE_inst_in      <= 32'h00000013;
             ID_EXE_PC           <= 32'h00000000;
             ID_EXE_ALU_A        <= 32'h00000000;
@@ -81,7 +71,7 @@ module REG_ID_EXE(
             ID_EXE_DatatoReg    <= 2'b00;
             ID_EXE_RegWrite     <= 1'b0;
             
-            ID_EXE_written_reg  <= 5'b00000;
+            ID_EXE_written_reg  <= 5'b00000; 
             ID_EXE_read_reg1    <= 5'b00000;
             ID_EXE_read_reg2    <= 5'b00000;
 
@@ -95,30 +85,10 @@ module REG_ID_EXE(
             ID_EXE_DatatoReg    <= DatatoReg;
             ID_EXE_RegWrite     <= RegWrite;
 
-            Mux3to1b32 ALU1(
-                .s(output_ALU1),
-                .I0(ALU_A),
-                .I1(EXE_MEM_ALU_out),
-                .I2(MEM_WB_ALU_out),
-                .o(ID_EXE_ALU_A)
-            );
+            ID_EXE_ALU_A        <= ALU_A;
+            ID_EXE_ALU_B        <= ALU_B;
+            ID_EXE_Data_out     <= Data_out;
 
-            Mux3to1b32 ALU2(
-                .s(output_ALU2),
-                .I0(ALU_B),
-                .I1(EXE_MEM_ALU_out),
-                .I2(MEM_WB_ALU_out),
-                .o(ID_EXE_ALU_B)
-            );
-
-            Mux3to1b32 ALU2(
-                .s(output_store),
-                .I0(Data_out),
-                .I1(EXE_MEM_ALU_out),
-                .I2(MEM_WB_ALU_out),
-                .o(ID_EXE_Data_out)
-            );
-            
             ID_EXE_written_reg  <= written_reg;
             ID_EXE_read_reg1    <= read_reg1;
             ID_EXE_read_reg2    <= read_reg2;

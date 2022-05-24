@@ -36,5 +36,6 @@ module Mux4to1b32(
 			2'b11: o = I3;
 			default: o = I0;
 		endcase
+		//if (disp) $display("Cycle count: %t\nPC_out: %t\nbranch_out: %t\njal_out: %t\njalr_out: %t\nBranch: %t\nPC_wb: %t\n", $time, I0, I1, I2, I3, s, o);
 	end
 endmodule

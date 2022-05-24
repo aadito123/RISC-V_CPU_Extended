@@ -1,0 +1,6 @@
+RV32i/RV32i.cache
+RV32i/RV32i.sim/sim_1/behav/xsim
+RV32i/RV32i.sim/sim_1/behav/xsim/Top_behav.wdb
+RV32i/RV32i.sim/sim_1/behav/xsim/simulate.log
+RV32i/*.backup.jou
+RV32i/*.backup.log
